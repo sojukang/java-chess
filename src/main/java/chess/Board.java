@@ -20,8 +20,7 @@ public class Board {
     private Map<Position, Piece> initBoard() {
         Map<Position, Piece> result = new HashMap<>();
 
-        putFrontLinePawn(result, BLACK);
-        putFrontLinePawn(result, WHITE);
+        putPawnLines(result);
 
         putBackLinePieces(result, BLACK);
         putBackLinePieces(result, WHITE);
@@ -29,14 +28,14 @@ public class Board {
         return result;
     }
 
-    private void putFrontLinePawn(Map<Position, Piece> result, PieceColor color) {
-        Rank frontLineRank = TWO;
-        if (color == WHITE) {
-            frontLineRank = SEVEN;
-        }
+    private void putPawnLines(Map<Position, Piece> result) {
+        putPawnLine(result, BLACK, TWO);
+        putPawnLine(result, WHITE, SEVEN);
+    }
 
+    private void putPawnLine(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            result.put(new Position(frontLineRank, file), new Piece(PAWN, color));
+            result.put(new Position(rank, file), new Piece(PAWN, color));
         }
     }
 
@@ -45,6 +44,7 @@ public class Board {
         if (color == WHITE) {
             backLineRank = EIGHT;
         }
+
         ListIterator<PieceType> backLinePieceTypesIterator = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK)
             .listIterator();
 
