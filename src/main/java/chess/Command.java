@@ -7,7 +7,7 @@ public enum Command {
     END("END");
 
     static final String NOT_FOUND_COMMAND_EXCEPTION = "[ERROR] 이 명령문은 존재하지 않습니다.";
-    private String name;
+    private final String name;
 
     Command(String name) {
         this.name = name;
