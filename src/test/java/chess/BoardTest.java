@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.piece.Pawn;
 import chess.piece.Piece;
@@ -91,5 +93,15 @@ public class BoardTest {
 
         //then
         assertThat(piecesByPositions.get(new Position(Rank.THREE, File.A))).isEqualTo(new Pawn(PieceColor.WHITE));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"ONE:B", "THREE:D"}, delimiter = ':')
+    @DisplayName("경로에 다른 기물 있으면 이동할 수 없다.")
+    void isBlocked(Rank rank, File file) {
+        assertThatThrownBy(() ->
+            board.move(new Position(Rank.ONE, File.D), new Position(rank, file)))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("[ERROR]");
     }
 }

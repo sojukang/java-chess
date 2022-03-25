@@ -1,5 +1,8 @@
 package chess.piece;
 
+import static chess.PieceColor.*;
+
+import java.util.Map;
 import java.util.Objects;
 
 import chess.PieceColor;

@@ -90,9 +90,12 @@ public class Board {
         values.put(source, new EmptyPiece(PieceColor.EMPTY));
     }
 
-    private boolean isBlocked(Position source, Position target) {
-        List<Position> tracePositions = source.traceGroup(target);
-
+    public boolean isBlocked(Position source, Position target) {
+        for (Position position : source.traceGroup(target)) {
+            if (!values.get(position).equals(new EmptyPiece(EMPTY))) {
+                return true;
+            }
+        }
         return false;
     }
 
