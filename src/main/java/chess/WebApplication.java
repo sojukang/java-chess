@@ -48,6 +48,7 @@ public class WebApplication {
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            board.init(new TurnDecider(), new defaultInitializer());
             return render(model, "index.html");
         });
     }

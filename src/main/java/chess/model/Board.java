@@ -14,7 +14,7 @@ public class Board {
     static final String ERROR_NOT_MOVABLE_CHESS_FINISHED = "[ERROR] 체스 게임이 종료되어 이동할 수 없습니다.";
 
     private final Map<Position, Piece> values;
-    private final TurnDecider turnDecider;
+    private TurnDecider turnDecider;
 
     public Board(TurnDecider turnDecider, BoardInitializer initializer) {
         this.values = initializer.apply();
@@ -116,5 +116,11 @@ public class Board {
 
     public Map<Position, Piece> getValues() {
         return values;
+    }
+
+    public void init(TurnDecider turnDecider, BoardInitializer initializer) {
+        this.values.clear();
+        this.values.putAll(initializer.apply());
+        this.turnDecider = turnDecider;
     }
 }
