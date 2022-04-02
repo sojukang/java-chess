@@ -26,24 +26,31 @@ public class WebApplication {
 
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Map<Position, Piece> values = board.getValues();
-            Map<String, String> pieceMap = values.keySet().stream().collect(Collectors.toUnmodifiableMap(
-                Position::getString, key -> values.get(key).getEmblem()));
 
-            model.put("pieces", pieceMap);
+            model.put("pieces", StringMapByBoardValues(board));
             return render(model, "index.html");
         });
 
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             board.move(Position.of(req.queryParams("start")), Position.of(req.queryParams("target")));
-            Map<Position, Piece> values = board.getValues();
-            Map<String, String> pieceMap = values.keySet().stream().collect(Collectors.toUnmodifiableMap(
-                Position::getString, key -> values.get(key).getEmblem()));
 
-            model.put("pieces", pieceMap);
+            model.put("pieces", StringMapByBoardValues(board));
             return render(model, "index.html");
         });
+
+        get("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("pieces", StringMapByBoardValues(board));
+            model.put("status", board.calculateScore());
+            return render(model, "index.html");
+        });
+    }
+
+    private static Map<String, String> StringMapByBoardValues(Board board) {
+        Map<Position, Piece> values = board.getValues();
+        return values.keySet().stream().collect(Collectors.toUnmodifiableMap(
+            Position::getString, key -> values.get(key).getEmblem()));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
