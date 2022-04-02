@@ -45,6 +45,11 @@ public class WebApplication {
             model.put("status", board.calculateScore());
             return render(model, "index.html");
         });
+
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
     }
 
     private static Map<String, String> StringMapByBoardValues(Board board) {
