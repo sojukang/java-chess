@@ -59,4 +59,8 @@ public enum Rank {
     private boolean isBiggerThan(Rank other) {
         return this.compareTo(other) > 0;
     }
+
+    public String getValue() {
+        return Integer.toString(value);
+    }
 }

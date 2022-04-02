@@ -2,9 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
 </head>
 <body>
-Hello World!!
+<img src="/images/ChessBoard.png" alt="ChessBoard" width="50%" height="50%">
+<form action="/start" method="get">
+    <button>시작</button>
+</form>
 </body>
+<p>
+    {{#pieces}}
+    체스말들 출력
+    <br>
+    {{this.a8}}
+    {{this.b8}}
+    {{this.c8}}
+    {{this.d8}}
+    {{this.e8}}
+    {{this.f8}}
+    {{this.g8}}
+    {{this.h8}}
+    <br>
+    {{this.a7}}
+    {{this.b7}}
+    {{this.c7}}
+    {{this.d7}}
+    {{this.e7}}
+    {{this.f7}}
+    {{this.g7}}
+    {{this.h7}}
+    <br>
+    {{this.a6}}
+    {{this.b6}}
+    {{this.c6}}
+    {{this.d6}}
+    {{this.e6}}
+    {{this.f6}}
+    {{this.g6}}
+    {{this.h6}}
+    <br>
+    {{this.a5}}
+    {{this.b5}}
+    {{this.c5}}
+    {{this.d5}}
+    {{this.e5}}
+    {{this.f5}}
+    {{this.g5}}
+    {{this.h5}}
+    <br>
+    {{this.a4}}
+    {{this.b4}}
+    {{this.c4}}
+    {{this.d4}}
+    {{this.e4}}
+    {{this.f4}}
+    {{this.g4}}
+    {{this.h4}}
+    <br>
+    {{this.a3}}
+    {{this.b3}}
+    {{this.c3}}
+    {{this.d3}}
+    {{this.e3}}
+    {{this.f3}}
+    {{this.g3}}
+    {{this.h3}}
+    <br>
+    {{this.a2}}
+    {{this.b2}}
+    {{this.c2}}
+    {{this.d2}}
+    {{this.e2}}
+    {{this.f2}}
+    {{this.g2}}
+    {{this.h2}}
+    <br>
+    {{this.a1}}
+    {{this.b1}}
+    {{this.c1}}
+    {{this.d1}}
+    {{this.e1}}
+    {{this.f1}}
+    {{this.g1}}
+    {{this.h1}}
+    <br>
+    {{/pieces}}
+</p>
+
 </html>

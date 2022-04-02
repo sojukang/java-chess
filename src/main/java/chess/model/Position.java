@@ -121,4 +121,8 @@ public class Position {
             ", file=" + file +
             '}';
     }
+
+    public String getString() {
+        return "" + file.getValue() + rank.getValue();
+    }
 }
