@@ -5,11 +5,16 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.model.Board;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
     public static void main(String[] args) {
+        staticFiles.location("/");
+        port(8080);
+
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
