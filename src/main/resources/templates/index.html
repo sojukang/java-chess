@@ -5,7 +5,7 @@
     <title>체스</title>
 </head>
 <body>
-<img src="/images/ChessBoard.png" alt="ChessBoard" width="50%" height="50%">
+
 <form action="/start" method="get">
     <button>시작</button>
 </form>
@@ -24,85 +24,210 @@
 <form action="/end" method="get">
     <button>종료</button>
 </form>
+{{#pieces}}
+<div style="position: relative;">
+    <img src="/images/ChessBoard.png" alt="ChessBoard" width="800" height="800">
+    <div style="position: absolute; top: 30px; left: 25px;">
+        <img src="/images/{{this.a8}}.png" alt="{{this.a8}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 30px; left: 125px;">
+        <img src="/images/{{this.b8}}.png" alt="{{this.b8}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 30px; left: 225px;">
+        <img src="/images/{{this.c8}}.png" alt="{{this.c8}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 30px; left: 325px;">
+        <img src="/images/{{this.d8}}.png" alt="{{this.d8}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 30px; left: 425px;">
+        <img src="/images/{{this.e8}}.png" alt="{{this.e8}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 30px; left: 525px;">
+        <img src="/images/{{this.f8}}.png" alt="{{this.f8}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 30px; left: 625px;">
+        <img src="/images/{{this.g8}}.png" alt="{{this.g8}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 30px; left: 725px;">
+        <img src="/images/{{this.h8}}.png" alt="{{this.h8}}" width="50px" height="70px">
+    </div>
 
-<p>
-    {{#pieces}}
-    체스말들 출력
-    <br>
-    {{this.a8}}
-    {{this.b8}}
-    {{this.c8}}
-    {{this.d8}}
-    {{this.e8}}
-    {{this.f8}}
-    {{this.g8}}
-    {{this.h8}}
-    <br>
-    {{this.a7}}
-    {{this.b7}}
-    {{this.c7}}
-    {{this.d7}}
-    {{this.e7}}
-    {{this.f7}}
-    {{this.g7}}
-    {{this.h7}}
-    <br>
-    {{this.a6}}
-    {{this.b6}}
-    {{this.c6}}
-    {{this.d6}}
-    {{this.e6}}
-    {{this.f6}}
-    {{this.g6}}
-    {{this.h6}}
-    <br>
-    {{this.a5}}
-    {{this.b5}}
-    {{this.c5}}
-    {{this.d5}}
-    {{this.e5}}
-    {{this.f5}}
-    {{this.g5}}
-    {{this.h5}}
-    <br>
-    {{this.a4}}
-    {{this.b4}}
-    {{this.c4}}
-    {{this.d4}}
-    {{this.e4}}
-    {{this.f4}}
-    {{this.g4}}
-    {{this.h4}}
-    <br>
-    {{this.a3}}
-    {{this.b3}}
-    {{this.c3}}
-    {{this.d3}}
-    {{this.e3}}
-    {{this.f3}}
-    {{this.g3}}
-    {{this.h3}}
-    <br>
-    {{this.a2}}
-    {{this.b2}}
-    {{this.c2}}
-    {{this.d2}}
-    {{this.e2}}
-    {{this.f2}}
-    {{this.g2}}
-    {{this.h2}}
-    <br>
-    {{this.a1}}
-    {{this.b1}}
-    {{this.c1}}
-    {{this.d1}}
-    {{this.e1}}
-    {{this.f1}}
-    {{this.g1}}
-    {{this.h1}}
-    <br>
-    {{/pieces}}
-</p>
+    <div style="position: absolute; top: 130px; left: 25px;">
+        <img src="/images/{{this.a7}}.png" alt="{{this.a7}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 130px; left: 125px;">
+        <img src="/images/{{this.b7}}.png" alt="{{this.b7}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 130px; left: 225px;">
+        <img src="/images/{{this.c7}}.png" alt="{{this.c7}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 130px; left: 325px;">
+        <img src="/images/{{this.d7}}.png" alt="{{this.d7}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 130px; left: 425px;">
+        <img src="/images/{{this.e7}}.png" alt="{{this.e7}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 130px; left: 525px;">
+        <img src="/images/{{this.f7}}.png" alt="{{this.f7}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 130px; left: 625px;">
+        <img src="/images/{{this.g7}}.png" alt="{{this.g7}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 130px; left: 725px;">
+        <img src="/images/{{this.h7}}.png" alt="{{this.h7}}" width="50px" height="70px">
+    </div>
+
+    <div style="position: absolute; top: 230px; left: 25px;">
+        <img src="/images/{{this.a6}}.png" alt="{{this.a6}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 230px; left: 125px;">
+        <img src="/images/{{this.b6}}.png" alt="{{this.a6}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 230px; left: 225px;">
+        <img src="/images/{{this.c6}}.png" alt="{{this.a6}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 230px; left: 325px;">
+        <img src="/images/{{this.d6}}.png" alt="{{this.a6}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 230px; left: 425px;">
+        <img src="/images/{{this.e6}}.png" alt="{{this.a6}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 230px; left: 525px;">
+        <img src="/images/{{this.f6}}.png" alt="{{this.a6}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 230px; left: 625px;">
+        <img src="/images/{{this.g6}}.png" alt="{{this.a6}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 230px; left: 725px;">
+        <img src="/images/{{this.h6}}.png" alt="{{this.a6}}" width="50px" height="70px">
+    </div>
+
+    <div style="position: absolute; top: 330px; left: 25px;">
+        <img src="/images/{{this.a5}}.png" alt="{{this.a5}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 330px; left: 125px;">
+        <img src="/images/{{this.b5}}.png" alt="{{this.a5}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 330px; left: 225px;">
+        <img src="/images/{{this.c5}}.png" alt="{{this.a5}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 330px; left: 325px;">
+        <img src="/images/{{this.d5}}.png" alt="{{this.a5}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 330px; left: 425px;">
+        <img src="/images/{{this.e5}}.png" alt="{{this.a5}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 330px; left: 525px;">
+        <img src="/images/{{this.f5}}.png" alt="{{this.a5}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 330px; left: 625px;">
+        <img src="/images/{{this.g5}}.png" alt="{{this.a5}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 330px; left: 725px;">
+        <img src="/images/{{this.h5}}.png" alt="{{this.a5}}" width="50px" height="70px">
+    </div>
+
+    <div style="position: absolute; top: 430px; left: 25px;">
+        <img src="/images/{{this.a4}}.png" alt="{{this.a4}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 430px; left: 125px;">
+        <img src="/images/{{this.b4}}.png" alt="{{this.b4}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 430px; left: 225px;">
+        <img src="/images/{{this.c4}}.png" alt="{{this.c4}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 430px; left: 325px;">
+        <img src="/images/{{this.d4}}.png" alt="{{this.d4}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 430px; left: 425px;">
+        <img src="/images/{{this.e4}}.png" alt="{{this.e4}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 430px; left: 525px;">
+        <img src="/images/{{this.f4}}.png" alt="{{this.f4}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 430px; left: 625px;">
+        <img src="/images/{{this.g4}}.png" alt="{{this.g4}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 430px; left: 725px;">
+        <img src="/images/{{this.h4}}.png" alt="{{this.h4}}" width="50px" height="70px">
+    </div>
+
+    <div style="position: absolute; top: 530px; left: 25px;">
+        <img src="/images/{{this.a3}}.png" alt="{{this.a3}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 530px; left: 125px;">
+        <img src="/images/{{this.b3}}.png" alt="{{this.b3}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 530px; left: 225px;">
+        <img src="/images/{{this.c3}}.png" alt="{{this.c3}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 530px; left: 325px;">
+        <img src="/images/{{this.d3}}.png" alt="{{this.d3}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 530px; left: 425px;">
+        <img src="/images/{{this.e3}}.png" alt="{{this.e3}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 530px; left: 525px;">
+        <img src="/images/{{this.f3}}.png" alt="{{this.f3}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 530px; left: 625px;">
+        <img src="/images/{{this.g3}}.png" alt="{{this.g3}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 530px; left: 725px;">
+        <img src="/images/{{this.h3}}.png" alt="{{this.h3}}" width="50px" height="70px">
+    </div>
+
+    <div style="position: absolute; top: 630px; left: 25px;">
+        <img src="/images/{{this.a2}}.png" alt="{{this.a2}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 630px; left: 125px;">
+        <img src="/images/{{this.b2}}.png" alt="{{this.b2}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 630px; left: 225px;">
+        <img src="/images/{{this.c2}}.png" alt="{{this.c2}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 630px; left: 325px;">
+        <img src="/images/{{this.d2}}.png" alt="{{this.d2}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 630px; left: 425px;">
+        <img src="/images/{{this.e2}}.png" alt="{{this.e2}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 630px; left: 525px;">
+        <img src="/images/{{this.f2}}.png" alt="{{this.f2}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 630px; left: 625px;">
+        <img src="/images/{{this.g2}}.png" alt="{{this.g2}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 630px; left: 725px;">
+        <img src="/images/{{this.h2}}.png" alt="{{this.h2}}" width="50px" height="70px">
+    </div>
+
+    <div style="position: absolute; top: 730px; left: 25px;">
+        <img src="/images/{{this.a1}}.png" alt="{{this.a1}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 730px; left: 125px;">
+        <img src="/images/{{this.b1}}.png" alt="{{this.b1}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 730px; left: 225px;">
+        <img src="/images/{{this.c1}}.png" alt="{{this.c1}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 730px; left: 325px;">
+        <img src="/images/{{this.d1}}.png" alt="{{this.d1}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 730px; left: 425px;">
+        <img src="/images/{{this.e1}}.png" alt="{{this.e1}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 730px; left: 525px;">
+        <img src="/images/{{this.f1}}.png" alt="{{this.f1}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 730px; left: 625px;">
+        <img src="/images/{{this.g1}}.png" alt="{{this.g1}}" width="50px" height="70px">
+    </div>
+    <div style="position: absolute; top: 730px; left: 725px;">
+        <img src="/images/{{this.h1}}.png" alt="{{this.h1}}" width="50px" height="70px">
+    </div>
+</div>
+{{/pieces}}
 </body>
 
 
