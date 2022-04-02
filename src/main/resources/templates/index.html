@@ -9,7 +9,13 @@
 <form action="/start" method="get">
     <button>시작</button>
 </form>
-</body>
+
+<form action="/move" method="post">
+    <p><label>Start : <input type="text" name="start"></label></p>
+    <p><label>Target : <input type="text" name="target"></label></p>
+    <p><input type="submit" value="이동"></p>
+</form>
+
 <p>
     {{#pieces}}
     체스말들 출력
@@ -88,5 +94,7 @@
     <br>
     {{/pieces}}
 </p>
+</body>
+
 
 </html>

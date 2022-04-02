@@ -33,6 +33,17 @@ public class WebApplication {
             model.put("pieces", pieceMap);
             return render(model, "index.html");
         });
+
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            board.move(Position.of(req.queryParams("start")), Position.of(req.queryParams("target")));
+            Map<Position, Piece> values = board.getValues();
+            Map<String, String> pieceMap = values.keySet().stream().collect(Collectors.toUnmodifiableMap(
+                Position::getString, key -> values.get(key).getEmblem()));
+
+            model.put("pieces", pieceMap);
+            return render(model, "index.html");
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
