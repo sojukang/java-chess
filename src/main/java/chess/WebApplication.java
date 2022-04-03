@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.dao.BoardDao;
 import chess.dao.PlayerDao;
 import chess.dao.RoomDao;
 import chess.model.Board;
@@ -20,29 +21,48 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
+    private static String roomId;
+
     public static void main(String[] args) {
         staticFiles.location("/");
         Board board = new Board(new TurnDecider(), new defaultInitializer());
 
         index();
         start(board);
+        game(board);
+        save(board);
         move(board);
         status(board);
         end(board);
+        save(board);
+    }
 
+    private static void save(Board board) {
         post("/save", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            Map<String, String> boardStringMap = StringMapByBoardValues(board);
+            BoardDao boardDao = new BoardDao();
+
+            boardDao.save(boardStringMap, roomId);
+            model.put("pieces", boardStringMap);
+            return render(model, "game.html");
+        });
+    }
+
+    private static void game(Board board) {
+        post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Player playerWhite = new Player(req.queryParams("idPlayerWhite"));
             Player playerBlack = new Player(req.queryParams("idPlayerBlack"));
-
+            roomId = playerWhite.getId() + playerBlack.getId();
             RoomDao roomDao = new RoomDao();
-            roomDao.save(new Room(playerWhite.getId() + playerBlack.getId(),
-            List.of(playerWhite, playerBlack)));
+            roomDao.save(new Room(roomId, List.of(playerWhite, playerBlack)));
 
             PlayerDao playerDao = new PlayerDao();
             playerDao.save(playerWhite);
             playerDao.save(playerBlack);
 
+            model.put("roomId", roomId);
             model.put("pieces", StringMapByBoardValues(board));
             return render(model, "game.html");
         });

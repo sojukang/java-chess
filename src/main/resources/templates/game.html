@@ -13,6 +13,10 @@
     </form>
     {{status}}
 
+    <form action="/save" method="post">
+        <button>저장</button>
+    </form>
+
     <form action="/end" method="get">
         <button>종료</button>
     </form>
@@ -28,7 +32,7 @@
 <div class="left">
     {{#pieces}}
     <div style="position: relative;">
-        <img src="/images/ChessBoard.png" alt="ChessBoard" width="800" height="800">
+        <img src="/images/ChessBoardWithIndex.png" alt="ChessBoard" width="890" height="890">
         <div class="rank8 file1"><img src="/images/{{this.a8}}.png" alt="{{this.a8}}" class="piece"></div>
         <div class="rank8 file2"><img src="/images/{{this.b8}}.png" alt="{{this.b8}}" class="piece"></div>
         <div class="rank8 file3"><img src="/images/{{this.c8}}.png" alt="{{this.c8}}" class="piece"></div>

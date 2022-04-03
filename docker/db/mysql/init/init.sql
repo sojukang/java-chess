@@ -25,3 +25,13 @@ create table room
     id_black_player   varchar(20) not null,
     primary key (id)
 );
+
+create table board
+(
+    id int not null AUTO_INCREMENT,
+    room_id   varchar(20) not null,
+    position   varchar(20) not null,
+    piece   varchar(20) not null,
+    primary key (id),
+    foreign key (room_id) references room (id)
+);

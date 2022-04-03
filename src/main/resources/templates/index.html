@@ -8,14 +8,14 @@
 <body>
 <h1>WEB CHESS GAME!</h1>
 <div class="center">
-    <form action="/save" method="post">
+    <form action="/game" method="post">
         <p><label>백색 말 사용자 아이디 입력 : <input type="text" name="idPlayerWhite"></label></p>
-        <p><label>흑색 말 사용자 아이디 입력 : &nbsp;&nbsp;<input type="text" name="idPlayerBlack"></label></p>
-        <input type="submit" value="전송">
+        <p><label>흑색 말 사용자 아이디 입력 : <input type="text" name="idPlayerBlack"></label></p>
+        <input type="submit" value="저장하며 두기">
     </form>
 
     <form action="/start" method="get">
-        <button>시작</button>
+        <button>저장 없이 시작</button>
     </form>
 
     <form action="/end" method="get">
@@ -25,7 +25,5 @@
     <img src="/images/chessBoardIndexPage.png" alt="ChessBoard" width="800" height="800">
 </div>
 </body>
-
-
 
 </html>
