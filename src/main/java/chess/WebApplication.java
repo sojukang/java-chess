@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import chess.dao.PlayerDao;
+import chess.dao.RoomDao;
 import chess.model.Board;
 import chess.model.File;
 import chess.model.Position;
@@ -31,9 +32,16 @@ public class WebApplication {
 
         post("/save", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            Player playerWhite = new Player(req.queryParams("idPlayerWhite"));
+            Player playerBlack = new Player(req.queryParams("idPlayerBlack"));
+
+            RoomDao roomDao = new RoomDao();
+            roomDao.save(new Room(playerWhite.getId() + playerBlack.getId(),
+            List.of(playerWhite, playerBlack)));
+
             PlayerDao playerDao = new PlayerDao();
-            playerDao.save(new Player(req.queryParams("IdPlayerA")));
-            playerDao.save(new Player(req.queryParams("IdPlayerB")));
+            playerDao.save(playerWhite);
+            playerDao.save(playerBlack);
 
             model.put("pieces", StringMapByBoardValues(board));
             return render(model, "game.html");
@@ -67,6 +75,7 @@ public class WebApplication {
                 }
 
                 return render(model, "game.html");
+
             } catch (RuntimeException e) {
                 model.put("pieces", StringMapByBoardValues(board));
                 model.put("error", e.getMessage());

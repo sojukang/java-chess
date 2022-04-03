@@ -17,3 +17,11 @@ create table player
     id   varchar(20) not null,
     primary key (id)
 );
+
+create table room
+(
+    id   varchar(20) not null,
+    id_white_player   varchar(20) not null,
+    id_black_player   varchar(20) not null,
+    primary key (id)
+);
