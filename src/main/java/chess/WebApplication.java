@@ -24,24 +24,9 @@ public class WebApplication {
         Board board = new Board(new TurnDecider(), new defaultInitializer());
 
         index();
-
-        get("/start", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-
-            model.put("pieces", StringMapByBoardValues(board));
-            return render(model, "game.html");
-        });
-
+        start(board);
         move(board);
-
-
-        get("/status", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("pieces", StringMapByBoardValues(board));
-            model.put("status", board.calculateScore());
-            return render(model, "game.html");
-        });
-
+        status(board);
         end(board);
     }
 
@@ -52,11 +37,12 @@ public class WebApplication {
         });
     }
 
-    private static void end(Board board) {
-        get("/end", (req, res) -> {
+    private static void start(Board board) {
+        get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            board.init(new TurnDecider(), new defaultInitializer());
-            return render(model, "index.html");
+
+            model.put("pieces", StringMapByBoardValues(board));
+            return render(model, "game.html");
         });
     }
 
@@ -65,21 +51,42 @@ public class WebApplication {
             Map<String, Object> model = new HashMap<>();
             try {
                 board.move(Position.of(req.queryParams("start")), Position.of(req.queryParams("target")));
-
                 model.put("pieces", StringMapByBoardValues(board));
                 if (board.isFinished()) {
-                    model.put("pieces", StringMapByBoardValues(board));
-                    model.put("score", board.calculateScore());
-                    model.put("winnerColor", board.getWinnerColor());
-                    board.init(new TurnDecider(), new defaultInitializer());
-                    return render(model, "finish.html");
+                    return finishWhenKingCaptured(board, model);
                 }
+
                 return render(model, "game.html");
             } catch (RuntimeException e) {
                 model.put("pieces", StringMapByBoardValues(board));
                 model.put("error", e.getMessage());
                 return render(model, "game.html");
             }
+        });
+    }
+
+    private static String finishWhenKingCaptured(Board board, Map<String, Object> model) {
+        model.put("pieces", StringMapByBoardValues(board));
+        model.put("score", board.calculateScore());
+        model.put("winnerColor", board.getWinnerColor());
+        board.init(new TurnDecider(), new defaultInitializer());
+        return render(model, "finish.html");
+    }
+
+    private static void status(Board board) {
+        get("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("pieces", StringMapByBoardValues(board));
+            model.put("status", board.calculateScore());
+            return render(model, "game.html");
+        });
+    }
+
+    private static void end(Board board) {
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            board.init(new TurnDecider(), new defaultInitializer());
+            return render(model, "index.html");
         });
     }
 
