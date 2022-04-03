@@ -35,3 +35,12 @@ create table board
     primary key (id),
     foreign key (room_id) references room (id)
 );
+
+create table turn
+(
+    id int not null AUTO_INCREMENT,
+    room_id   varchar(20) not null,
+    color   varchar(20) not null,
+    primary key (id),
+    foreign key (room_id) references room (id)
+);

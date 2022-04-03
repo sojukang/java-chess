@@ -32,10 +32,7 @@ public class TurnDecider {
         nextState();
     }
 
-    public PieceColor getWinnerColor() {
-        if (!isFinished) {
-            throw new IllegalStateException("[ERROR] 게임이 아직 끝나지 않았습니다.");
-        }
+    public PieceColor getCurrentTurnColor() {
         return currentColor;
     }
 }

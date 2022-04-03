@@ -10,6 +10,7 @@ import java.util.Objects;
 import chess.dao.BoardDao;
 import chess.dao.PlayerDao;
 import chess.dao.RoomDao;
+import chess.dao.TurnDao;
 import chess.model.Board;
 import chess.model.File;
 import chess.model.Position;
@@ -41,8 +42,10 @@ public class WebApplication {
         post("/save", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Map<String, String> boardStringMap = StringMapByBoardValues(board);
+            TurnDao turnDao = new TurnDao();
             BoardDao boardDao = new BoardDao();
 
+            turnDao.save(roomId, board.getCurrentTurnColor());
             boardDao.save(boardStringMap, roomId);
             model.put("pieces", boardStringMap);
             return render(model, "game.html");
@@ -107,7 +110,7 @@ public class WebApplication {
     private static String finishWhenKingCaptured(Board board, Map<String, Object> model) {
         model.put("pieces", StringMapByBoardValues(board));
         model.put("score", board.calculateScore());
-        model.put("winnerColor", board.getWinnerColor());
+        model.put("winnerColor", board.getCurrentTurnColor());
         board.init(new TurnDecider(), new defaultInitializer());
         return render(model, "finish.html");
     }

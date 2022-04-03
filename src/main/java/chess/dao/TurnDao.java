@@ -4,9 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
 
-public class BoardDao {
+import chess.model.PieceColor;
+
+public class TurnDao {
 
     private static final String URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER = "user";
@@ -32,18 +33,15 @@ public class BoardDao {
         return null;
     }
 
-    public void save(Map<String, String> boardMap, String roomId) {
-        delete(roomId);
+    public void save(String roomId, PieceColor color) {
         Connection connection = getConnection();
-        String sql = "insert into board (room_id, position, piece) values (?, ?, ?)";
+        delete(roomId);
+        String sql = "insert into turn (room_id, color) values (?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            for (Map.Entry<String, String> entry : boardMap.entrySet()) {
-                statement.setString(1, roomId);
-                statement.setString(2, entry.getKey());
-                statement.setString(3, entry.getValue());
-                statement.execute();
-            }
+            statement.setString(1, roomId);
+            statement.setString(2, color.toString());
+            statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,7 +49,7 @@ public class BoardDao {
 
     public void delete(String roomId) {
         Connection connection = getConnection();
-        String sql = "delete from board where room_id = " + "'" + roomId + "'";
+        String sql = "delete from turn where room_id = " + "'" + roomId + "'";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.execute();
