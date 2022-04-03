@@ -11,3 +11,9 @@ create table role(
     primary key (member_id),
     foreign key (member_id) references member (id)
 );
+
+create table player
+(
+    id   varchar(20) not null,
+    primary key (id)
+);

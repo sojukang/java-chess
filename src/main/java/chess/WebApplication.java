@@ -3,10 +3,11 @@ package chess;
 import static spark.Spark.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
+import chess.dao.PlayerDao;
 import chess.model.Board;
 import chess.model.File;
 import chess.model.Position;
@@ -15,7 +16,6 @@ import chess.model.TurnDecider;
 import chess.model.boardinitializer.defaultInitializer;
 import chess.model.piece.Piece;
 import spark.ModelAndView;
-import spark.Redirect;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
@@ -28,6 +28,16 @@ public class WebApplication {
         move(board);
         status(board);
         end(board);
+
+        post("/save", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            PlayerDao playerDao = new PlayerDao();
+            playerDao.save(new Player(req.queryParams("IdPlayerA")));
+            playerDao.save(new Player(req.queryParams("IdPlayerB")));
+
+            model.put("pieces", StringMapByBoardValues(board));
+            return render(model, "game.html");
+        });
     }
 
     private static void index() {
