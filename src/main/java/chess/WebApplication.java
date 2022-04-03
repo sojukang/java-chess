@@ -15,6 +15,7 @@ import chess.model.TurnDecider;
 import chess.model.boardinitializer.defaultInitializer;
 import chess.model.piece.Piece;
 import spark.ModelAndView;
+import spark.Redirect;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
@@ -22,27 +23,36 @@ public class WebApplication {
         staticFiles.location("/");
         Board board = new Board(new TurnDecider(), new defaultInitializer());
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        index();
 
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
             model.put("pieces", StringMapByBoardValues(board));
-            return render(model, "index.html");
+            return render(model, "game.html");
         });
 
         move(board);
+
 
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", StringMapByBoardValues(board));
             model.put("status", board.calculateScore());
-            return render(model, "index.html");
+            return render(model, "game.html");
         });
 
+        end(board);
+    }
+
+    private static void index() {
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
+    }
+
+    private static void end(Board board) {
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             board.init(new TurnDecider(), new defaultInitializer());
@@ -57,11 +67,18 @@ public class WebApplication {
                 board.move(Position.of(req.queryParams("start")), Position.of(req.queryParams("target")));
 
                 model.put("pieces", StringMapByBoardValues(board));
-                return render(model, "index.html");
+                if (board.isFinished()) {
+                    model.put("pieces", StringMapByBoardValues(board));
+                    model.put("score", board.calculateScore());
+                    model.put("winnerColor", board.getWinnerColor());
+                    board.init(new TurnDecider(), new defaultInitializer());
+                    return render(model, "finish.html");
+                }
+                return render(model, "game.html");
             } catch (RuntimeException e) {
                 model.put("pieces", StringMapByBoardValues(board));
                 model.put("error", e.getMessage());
-                return render(model, "index.html");
+                return render(model, "game.html");
             }
         });
     }
@@ -92,19 +109,19 @@ public class WebApplication {
 
     private static String emblemMapper(String emblem) {
         Map<String, String> mappingTable = new HashMap<>();
-        mappingTable.put("p", "blackPawn");
-        mappingTable.put("r", "blackRook");
-        mappingTable.put("n", "blackKnight");
-        mappingTable.put("b", "blackBishop");
-        mappingTable.put("q", "blackQueen");
-        mappingTable.put("k", "blackKing");
+        mappingTable.put("p", "whitePawn");
+        mappingTable.put("r", "whiteRook");
+        mappingTable.put("n", "whiteKnight");
+        mappingTable.put("b", "whiteBishop");
+        mappingTable.put("q", "whiteQueen");
+        mappingTable.put("k", "whiteKing");
 
-        mappingTable.put("P", "whitePawn");
-        mappingTable.put("R", "whiteRook");
-        mappingTable.put("N", "whiteKnight");
-        mappingTable.put("B", "whiteBishop");
-        mappingTable.put("Q", "whiteQueen");
-        mappingTable.put("K", "whiteKing");
+        mappingTable.put("P", "blackPawn");
+        mappingTable.put("R", "blackRook");
+        mappingTable.put("N", "blackKnight");
+        mappingTable.put("B", "blackBishop");
+        mappingTable.put("Q", "blackQueen");
+        mappingTable.put("K", "blackKing");
 
         return mappingTable.get(emblem);
     }

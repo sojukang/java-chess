@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import chess.model.boardinitializer.BoardInitializer;
+import chess.model.boardinitializer.defaultInitializer;
 import chess.model.piece.Piece;
 
 public class Board {
@@ -122,5 +123,9 @@ public class Board {
         this.values.clear();
         this.values.putAll(initializer.apply());
         this.turnDecider = turnDecider;
+    }
+
+    public PieceColor getWinnerColor() {
+        return turnDecider.getWinnerColor();
     }
 }
