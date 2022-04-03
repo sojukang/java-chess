@@ -34,13 +34,7 @@ public class WebApplication {
             return render(model, "index.html");
         });
 
-        post("/move", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            board.move(Position.of(req.queryParams("start")), Position.of(req.queryParams("target")));
-
-            model.put("pieces", StringMapByBoardValues(board));
-            return render(model, "index.html");
-        });
+        move(board);
 
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -53,6 +47,22 @@ public class WebApplication {
             Map<String, Object> model = new HashMap<>();
             board.init(new TurnDecider(), new defaultInitializer());
             return render(model, "index.html");
+        });
+    }
+
+    private static void move(Board board) {
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            try {
+                board.move(Position.of(req.queryParams("start")), Position.of(req.queryParams("target")));
+
+                model.put("pieces", StringMapByBoardValues(board));
+                return render(model, "index.html");
+            } catch (RuntimeException e) {
+                model.put("pieces", StringMapByBoardValues(board));
+                model.put("error", e.getMessage());
+                return render(model, "index.html");
+            }
         });
     }
 
