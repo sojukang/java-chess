@@ -3,8 +3,14 @@ package chess.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import chess.Player;
+import chess.Room;
 
 public class BoardDao {
 
@@ -58,5 +64,30 @@ public class BoardDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Map<String, String> findById(String id) {
+        Connection connection = getConnection();
+        String sql = "select position, piece from board where room_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+            Map<String, String> boardMap = new HashMap<>();
+
+            while (resultSet.next()) {
+                boardMap.put(resultSet.getString("position"),
+                    resultSet.getString("piece"));
+            }
+
+            return boardMap;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

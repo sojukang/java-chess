@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import chess.dao.BoardDao;
-import chess.dao.PlayerDao;
 import chess.dao.RoomDao;
 import chess.dao.TurnDao;
 import chess.model.Board;
@@ -23,10 +22,10 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
     private static String roomId;
+    private static Board board = new Board(new TurnDecider(), new defaultInitializer());
 
     public static void main(String[] args) {
         staticFiles.location("/");
-        Board board = new Board(new TurnDecider(), new defaultInitializer());
 
         index();
         start(board);
@@ -41,7 +40,7 @@ public class WebApplication {
     private static void save(Board board) {
         post("/save", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Map<String, String> boardStringMap = StringMapByBoardValues(board);
+            Map<String, String> boardStringMap = stringMapByBoardValues(board);
             TurnDao turnDao = new TurnDao();
             BoardDao boardDao = new BoardDao();
 
@@ -58,15 +57,20 @@ public class WebApplication {
             Player playerWhite = new Player(req.queryParams("idPlayerWhite"));
             Player playerBlack = new Player(req.queryParams("idPlayerBlack"));
             roomId = playerWhite.getId() + playerBlack.getId();
+
             RoomDao roomDao = new RoomDao();
-            roomDao.save(new Room(roomId, List.of(playerWhite, playerBlack)));
+            if (Objects.isNull(roomDao.findById(roomId))) {
+                roomDao.save(new Room(roomId, List.of(playerWhite, playerBlack)));
+            }
 
-            PlayerDao playerDao = new PlayerDao();
-            playerDao.save(playerWhite);
-            playerDao.save(playerBlack);
-
+            BoardDao boardDao = new BoardDao();
+            Map<String, String> stringMap = boardDao.findById(roomId);
+            if (Objects.isNull(stringMap)) {
+                model.put("pieces", stringMapByBoardValues(board));
+            } else {
+                model.put("pieces", stringMap);
+            }
             model.put("roomId", roomId);
-            model.put("pieces", StringMapByBoardValues(board));
             return render(model, "game.html");
         });
     }
@@ -82,7 +86,7 @@ public class WebApplication {
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
-            model.put("pieces", StringMapByBoardValues(board));
+            model.put("pieces", stringMapByBoardValues(board));
             return render(model, "game.html");
         });
     }
@@ -92,7 +96,7 @@ public class WebApplication {
             Map<String, Object> model = new HashMap<>();
             try {
                 board.move(Position.of(req.queryParams("start")), Position.of(req.queryParams("target")));
-                model.put("pieces", StringMapByBoardValues(board));
+                model.put("pieces", stringMapByBoardValues(board));
                 if (board.isFinished()) {
                     return finishWhenKingCaptured(board, model);
                 }
@@ -100,7 +104,7 @@ public class WebApplication {
                 return render(model, "game.html");
 
             } catch (RuntimeException e) {
-                model.put("pieces", StringMapByBoardValues(board));
+                model.put("pieces", stringMapByBoardValues(board));
                 model.put("error", e.getMessage());
                 return render(model, "game.html");
             }
@@ -108,7 +112,7 @@ public class WebApplication {
     }
 
     private static String finishWhenKingCaptured(Board board, Map<String, Object> model) {
-        model.put("pieces", StringMapByBoardValues(board));
+        model.put("pieces", stringMapByBoardValues(board));
         model.put("score", board.calculateScore());
         model.put("winnerColor", board.getCurrentTurnColor());
         board.init(new TurnDecider(), new defaultInitializer());
@@ -118,7 +122,7 @@ public class WebApplication {
     private static void status(Board board) {
         get("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("pieces", StringMapByBoardValues(board));
+            model.put("pieces", stringMapByBoardValues(board));
             model.put("status", board.calculateScore());
             return render(model, "game.html");
         });
@@ -132,7 +136,7 @@ public class WebApplication {
         });
     }
 
-    private static Map<String, String> StringMapByBoardValues(Board board) {
+    private static Map<String, String> stringMapByBoardValues(Board board) {
         Map<Position, Piece> values = board.getValues();
         Map<String, String> result = new HashMap<>();
         for (Rank rank : Rank.reverseValues()) {
