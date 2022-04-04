@@ -3,9 +3,11 @@ package chess.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import chess.model.PieceColor;
+import chess.model.TurnDecider;
 
 public class TurnDao {
 
@@ -56,5 +58,23 @@ public class TurnDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public TurnDecider findById(String roomId) {
+        Connection connection = getConnection();
+        String sql = "select color from turn where room_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, roomId);
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+            return new TurnDecider(PieceColor.valueOf(resultSet.getString("color")));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

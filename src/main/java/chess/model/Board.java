@@ -118,12 +118,6 @@ public class Board {
         return values;
     }
 
-    public void init(TurnDecider turnDecider, BoardInitializer initializer) {
-        this.values.clear();
-        this.values.putAll(initializer.apply());
-        this.turnDecider = turnDecider;
-    }
-
     public PieceColor getCurrentTurnColor() {
         return turnDecider.getCurrentTurnColor();
     }

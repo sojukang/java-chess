@@ -44,3 +44,7 @@ create table turn
     primary key (id),
     foreign key (room_id) references room (id)
 );
+
+delete from board;
+delete from turn;
+delete from room;

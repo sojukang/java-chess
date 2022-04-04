@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.model.boardinitializer.BoardInitializer;
-import chess.model.boardinitializer.defaultInitializer;
+import chess.model.boardinitializer.DefaultInitializer;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 
@@ -24,7 +24,7 @@ class ScoreCalculatorTest {
     void apply() {
         //given
         ScoreCalculator scoreCalculator = new ScoreCalculator(
-            new Board(new TurnDecider(), new defaultInitializer()).getValues(),
+            new Board(new TurnDecider(), new DefaultInitializer()).getValues(),
             new TurnDecider());
 
         //when

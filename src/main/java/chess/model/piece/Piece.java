@@ -1,10 +1,17 @@
 package chess.model.piece;
 
+import static chess.model.PieceColor.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
+import chess.model.File;
 import chess.model.MoveType;
 import chess.model.Path;
 import chess.model.PieceColor;
+import chess.model.Position;
+import chess.model.Rank;
 
 public abstract class Piece {
 

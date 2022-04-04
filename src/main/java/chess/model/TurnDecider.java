@@ -4,8 +4,16 @@ import chess.model.piece.Piece;
 
 public class TurnDecider {
 
-    private PieceColor currentColor = PieceColor.WHITE;
+    private PieceColor currentColor;
     private boolean isFinished = false;
+
+    public TurnDecider() {
+        currentColor = PieceColor.WHITE;
+    }
+
+    public TurnDecider(PieceColor pieceColor) {
+        currentColor = pieceColor;
+    }
 
     boolean isTurnOf(Piece Piece) {
         return isSameColor(Piece);

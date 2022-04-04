@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.model.boardinitializer.BoardInitializer;
-import chess.model.boardinitializer.defaultInitializer;
+import chess.model.boardinitializer.DefaultInitializer;
 import chess.model.piece.King;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
@@ -31,7 +31,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(new TurnDecider(), new defaultInitializer());
+        board = new Board(new TurnDecider(), new DefaultInitializer());
     }
 
     @Test
@@ -182,7 +182,7 @@ class BoardTest {
     @Test
     @DisplayName("첫판에 점수를 계산하면 38점이 나온다")
     void when_first_turn_cal_score_then_38() {
-        Board board = new Board(new TurnDecider(), new defaultInitializer());
+        Board board = new Board(new TurnDecider(), new DefaultInitializer());
         double score = board.calculateScore();
         assertThat(score).isEqualTo(38.0);
     }

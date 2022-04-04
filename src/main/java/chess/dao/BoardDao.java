@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import chess.Player;
 import chess.Room;
@@ -73,21 +74,27 @@ public class BoardDao {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) {
-                return null;
-            }
             Map<String, String> boardMap = new HashMap<>();
+
+            // if (!resultSet.next()) {
+            //     return null;
+            // }
 
             while (resultSet.next()) {
                 boardMap.put(resultSet.getString("position"),
                     resultSet.getString("piece"));
             }
-
+            System.out.println("[findById] map" + boardMap.keySet().size());
+            System.out.println(boardMap);
             return boardMap;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new BoardDao().findById("soju"));
     }
 }
