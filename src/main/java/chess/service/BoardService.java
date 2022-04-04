@@ -3,7 +3,6 @@ package chess.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import chess.EmblemMapper;
 import chess.Player;
@@ -28,11 +27,8 @@ public class BoardService {
     public void initBySavedData(TurnDecider turnDecider, BoardInitializer initializer) {
         if (findSavedBoardStringMap().isEmpty()) {
             init(turnDecider, initializer);
-            System.out.println("[initiated] new");
             return;
         }
-        System.out.println("[initiated] by initBySavedData saved");
-        System.out.println(findSavedBoardStringMap());
         init(getSavedTurnDecider(), new SavedBoardInitializer(findSavedBoardStringMap()));
     }
 
@@ -54,14 +50,10 @@ public class BoardService {
         BoardDao boardDao = new BoardDao();
 
         turnDao.save(roomId, board.getCurrentTurnColor());
-        boardDao.save(stringMapByBoardValues(), roomId);
+        boardDao.save(getBoardStringMap(), roomId);
     }
 
     public Map<String, String> getBoardStringMap() {
-        return stringMapByBoardValues();
-    }
-
-    private Map<String, String> stringMapByBoardValues() {
         Map<Position, Piece> values = board.getValues();
         System.out.println("[board]" + values);
         Map<String, String> result = new HashMap<>();
@@ -101,5 +93,11 @@ public class BoardService {
 
     public PieceColor getCurrentTurnColor() {
         return board.getCurrentTurnColor();
+    }
+
+    public void delete() {
+        new TurnDao().delete(roomId);
+        new BoardDao().delete(roomId);
+        new RoomDao().delete(roomId);
     }
 }

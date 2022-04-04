@@ -8,11 +8,6 @@
 <body>
 <h1>WEB CHESS GAME!</h1>
 <div class="right">
-    <form action="/status" method="get">
-        <button>현재 점수</button>
-    </form>
-    {{status}}
-
     <form action="/save" method="post">
         <button>저장</button>
     </form>
@@ -21,12 +16,25 @@
         <button>종료</button>
     </form>
 
+    <form action="/init" method="post">
+        <button>판 초기화</button>
+    </form>
+
     <form action="/move" method="post">
         <p><label>Start : &nbsp;&nbsp;<input type="text" name="start"></label></p>
         <p><label>Target : <input type="text" name="target"></label></p>
-        <p><input type="submit" value="이동"></p>
+        <input type="submit" value="이동">
     </form>
 
+    <form action="/status" method="get">
+        <button>현재 점수</button>
+    </form>
+
+    <div class="status">
+        현재 점수 : {{status}}<br>
+        현재 차례 : {{color}}
+        {{error}}
+    </div>
 </div>
 
 <div class="left">
@@ -106,8 +114,6 @@
         <div class="rank1 file8"><img src="/images/{{this.h1}}.png" alt="{{this.h1}}" class="piece"></div>
     </div>
     {{/pieces}}
-
-    {{error}}
 </div>
 
 </body>

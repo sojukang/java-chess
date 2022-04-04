@@ -21,7 +21,7 @@ button, input {
     text-overflow: ellipsis;
     transition: all 200ms ease-in-out 0s;
     white-space: nowrap;
-    font-family: "Gotham Rounded A","Gotham Rounded B",Helvetica,Arial,sans-serif;
+    font-family: "Gotham Rounded A", "Gotham Rounded B", Helvetica, Arial, sans-serif;
     font-weight: 700;
     padding: 10px 30px 10px;
     font-size: 18px;
@@ -55,11 +55,19 @@ div.right {
     float: right;
 }
 
-label, p.winner {
+div.status {
+    margin-top: 30px;
     font-size: 18px;
-    font-family: "Gotham Rounded A","Gotham Rounded B",Helvetica,Arial,sans-serif;
+    font-family: "Gotham Rounded A", "Gotham Rounded B", Helvetica, Arial, sans-serif;
     font-weight: 700;
 }
+
+label, p.winner {
+    font-size: 18px;
+    font-family: "Gotham Rounded A", "Gotham Rounded B", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+}
+
 img.piece {
     width: 50px;
     height: 70px;

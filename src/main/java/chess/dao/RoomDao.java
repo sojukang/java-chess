@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import chess.Player;
@@ -71,22 +70,14 @@ public class RoomDao {
         return null;
     }
 
-    public List<Room> findAll() {
+    public void delete(String roomId) {
         Connection connection = getConnection();
-        String sql = "select id, id_white_player, id_black_player from room where id = ?";
-        List<Room> rooms = new ArrayList<>();
+        String sql = "delete from room where id = " + "'" + roomId + "'";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                rooms.add(new Room(resultSet.getString("id"),
-                    List.of(new Player(resultSet.getString("id_white_player")),
-                        new Player(resultSet.getString("id_black_player")))));
-                return rooms;
-            }
+            statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

@@ -25,8 +25,23 @@ public class WebApplication {
         save(boardService);
         move(boardService);
         status(boardService);
+        init(boardService);
         end(boardService);
         save(boardService);
+    }
+
+    private static void index() {
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
+    }
+
+    private static void init(BoardService boardService) {
+        post("/init", (req, res) -> {
+            boardService.delete();
+            return render(Map.of(), "index.html");
+        });
     }
 
     private static void game(BoardService boardService) {
@@ -36,7 +51,6 @@ public class WebApplication {
             Player playerBlack = new Player(req.queryParams("idPlayerBlack"));
             boardService.setId(playerWhite.getId() + playerBlack.getId());
 
-
             if (Objects.isNull(boardService.findRoomById())) {
                 boardService.saveRoom(List.of(playerWhite, playerBlack));
             }
@@ -44,6 +58,7 @@ public class WebApplication {
             boardService.initBySavedData(new TurnDecider(), new DefaultInitializer());
 
             model.put("pieces", boardService.getBoardStringMap());
+            model.put("color", boardService.getCurrentTurnColor());
             return render(model, "game.html");
         });
     }
@@ -54,13 +69,6 @@ public class WebApplication {
             boardService.save();
             model.put("pieces", boardService.getBoardStringMap());
             return render(model, "game.html");
-        });
-    }
-
-    private static void index() {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
         });
     }
 
@@ -82,7 +90,7 @@ public class WebApplication {
                 if (boardService.isFinished()) {
                     return finishWhenKingCaptured(boardService, model);
                 }
-
+                model.put("color", boardService.getCurrentTurnColor());
                 return render(model, "game.html");
 
             } catch (RuntimeException e) {
@@ -106,6 +114,7 @@ public class WebApplication {
             Map<String, Object> model = new HashMap<>();
             model.put("pieces", boardService.getBoardStringMap());
             model.put("status", boardService.calculateScore());
+            model.put("color", boardService.getCurrentTurnColor());
             return render(model, "game.html");
         });
     }
