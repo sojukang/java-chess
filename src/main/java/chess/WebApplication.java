@@ -35,6 +35,16 @@ public class WebApplication {
         status(board);
         end(board);
         save(board);
+
+        get("/daily", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "daily.html");
+        });
+
+        get("/next", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "next.html");
+        });
     }
 
     private static void save(Board board) {

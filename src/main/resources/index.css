@@ -2,6 +2,13 @@ h1 {
     text-align: center;
 }
 
+h2.pictureText {
+    margin-top: 100px;
+}
+
+img.picture {
+    margin-left: 100px;
+}
 form {
     display: inline;
 }
@@ -46,12 +53,12 @@ div.center {
 }
 
 div.left {
-    width: 55%;
+    width: 42%;
     float: left;
 }
 
 div.right {
-    width: 45%;
+    width: 58%;
     float: right;
 }
 
