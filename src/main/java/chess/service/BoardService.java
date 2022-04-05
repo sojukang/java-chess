@@ -55,7 +55,6 @@ public class BoardService {
 
     public Map<String, String> getBoardStringMap() {
         Map<Position, Piece> values = board.getValues();
-        System.out.println("[board]" + values);
         Map<String, String> result = new HashMap<>();
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {

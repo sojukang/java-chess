@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/style.css">
     <title>체스</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
     </form>
 
     <form action="/move" method="post">
-        <p><label>Start : &nbsp;&nbsp;<input type="text" name="start"></label></p>
+        <p><label>Source : &nbsp;&nbsp;<input type="text" name="source"></label></p>
         <p><label>Target : <input type="text" name="target"></label></p>
         <input type="submit" value="이동">
     </form>
@@ -32,7 +32,7 @@
 
     <div class="status">
         현재 점수 : {{status}}<br>
-        현재 차례 : {{color}}
+        현재 차례 : {{color}}<br>
         {{error}}
     </div>
 </div>

@@ -31,9 +31,4 @@ public class PieceCache {
     public static Piece of(String emblem) {
         return CACHE.get(emblem);
     }
-
-    public static void main(String[] args) {
-        System.out.println(PieceCache.of("p"));
-        System.out.println(PieceCache.of("P"));
-    }
 }

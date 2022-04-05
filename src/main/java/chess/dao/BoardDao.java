@@ -75,17 +75,11 @@ public class BoardDao {
                 boardMap.put(resultSet.getString("position"),
                     resultSet.getString("piece"));
             }
-            System.out.println("[findById] map" + boardMap.keySet().size());
-            System.out.println(boardMap);
             return boardMap;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new BoardDao().findById("soju"));
     }
 }

@@ -85,7 +85,7 @@ public class WebApplication {
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
-                boardService.move(Position.of(req.queryParams("start")), Position.of(req.queryParams("target")));
+                boardService.move(Position.of(req.queryParams("source")), Position.of(req.queryParams("target")));
                 model.put("pieces", boardService.getBoardStringMap());
                 if (boardService.isFinished()) {
                     return finishWhenKingCaptured(boardService, model);
@@ -95,6 +95,7 @@ public class WebApplication {
 
             } catch (RuntimeException e) {
                 model.put("pieces", boardService.getBoardStringMap());
+                model.put("color", boardService.getCurrentTurnColor());
                 model.put("error", e.getMessage());
                 return render(model, "game.html");
             }
@@ -104,7 +105,7 @@ public class WebApplication {
     private static String finishWhenKingCaptured(BoardService boardService, Map<String, Object> model) {
         model.put("pieces", boardService.getBoardStringMap());
         model.put("score", boardService.calculateScore());
-        model.put("winnerColor", boardService.getCurrentTurnColor());
+        model.put("Color", boardService.getCurrentTurnColor());
         boardService.init(new TurnDecider(), new DefaultInitializer());
         return render(model, "finish.html");
     }
